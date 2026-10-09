@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Mis Entregas</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="irAAjustes()">
+        Ajustes
+      </ion-button>
+      <ion-button fill="solid" color="danger" (click)="cerrarSesion()">
+        Salir
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" color="light">
+  
+  <h2 style="color: #444; font-weight: bold; margin-bottom: 20px;">Entregas Pendientes</h2>
+
+  <ion-card *ngFor="let pedido of pedidos">
+    <ion-card-header>
+      <ion-card-title>{{ pedido.cliente }}</ion-card-title>
+      <ion-card-subtitle>{{ pedido.direccion }}</ion-card-subtitle>
+    </ion-card-header>
+    
+    <ion-card-content>
+      <div style="display: flex; justify-content: space-between; font-size: 16px; margin-bottom: 10px;">
+        <span><strong>Pedido:</strong> {{ pedido.cantidad_garrafones }} Garrafones</span>
+        <span style="color: #0d6efd;"><strong>Pago:</strong> {{ pedido.tipo_pago }}</span>
+      </div>
+      
+      <!-- Etiqueta visual para indicar al repartidor si debe cobrar o solo entregar -->
+      <div style="margin-bottom: 15px;">
+         <ion-badge [color]="pedido.pago_confirmado ? 'success' : 'warning'">
+            {{ pedido.pago_confirmado ? 'Transferencia Validada' : 'Cobrar al Entregar' }}
+         </ion-badge>
+      </div>
+
+      <!-- NOTAS DEL CLIENTE (Instrucciones de entrega) -->
+      <div *ngIf="pedido.notas_cliente" style="background-color: #fff3cd; padding: 10px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #ffeeba;">
+        <div style="color: #856404; font-size: 14px; display: flex; align-items: center; gap: 5px;">
+          <ion-icon name="alert-circle-outline" style="font-size: 18px;"></ion-icon>
+          <strong>Nota del cliente:</strong>
+        </div>
+        <div style="color: #856404; font-size: 14px; margin-top: 4px; padding-left: 23px;">
+          {{ pedido.notas_cliente }}
+        </div>
+      </div>
+
+      <!-- Notas operativas de campo, renderizadas solo si no son nulas -->
+      <div *ngIf="pedido.notas_campo" style="margin-bottom: 15px; font-style: italic; color: #666;">
+        Nota de campo: {{ pedido.notas_campo }}
+      </div>
+      
+      <!-- Botón 1: Solo aparece si está Pendiente -->
+      <ion-button 
+        *ngIf="pedido.estatus_entrega === 'Pendiente'" 
+        color="warning" 
+        expand="block" 
+        (click)="actualizarEstatus(pedido.id_pedido, 'En camino')">
+        Iniciar Entrega
+      </ion-button>
+
+      <!-- Botones 2 y 3: Solo aparecen si ya está En camino -->
+      <div *ngIf="pedido.estatus_entrega === 'En camino'" style="display: flex; gap: 10px;">
+        <ion-button 
+          color="danger" 
+          expand="block" 
+          style="flex: 1;"
+          (click)="actualizarEstatus(pedido.id_pedido, 'No Entregado')">
+          Falló
+        </ion-button>
+        
+        <ion-button 
+          color="success" 
+          expand="block" 
+          style="flex: 2;"
+          (click)="actualizarEstatus(pedido.id_pedido, 'Entregado')">
+          Entregado
+        </ion-button>
+      </div>
+
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Validación de estado vacío -->
+  <div *ngIf="pedidos.length === 0" class="ion-text-center" style="margin-top: 50px; color: #888;">
+    <p>No hay entregas pendientes o cargando datos...</p>
+  </div>
+
+</ion-content>

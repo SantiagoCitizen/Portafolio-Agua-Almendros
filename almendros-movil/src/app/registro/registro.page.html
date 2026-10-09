@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <!-- Este botón pone la flechita para regresar al login automáticamente -->
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+      <ion-title>Crear Cuenta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light" class="ion-padding">
+  
+  <p class="ion-text-center" style="color: #666; margin-bottom: 20px;">
+    Ingresa tus datos para comenzar a pedir agua a domicilio.
+  </p>
+
+  <!-- SECCIÓN 1: DATOS PERSONALES -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title style="font-size: 18px;">Datos Personales</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      
+      <ion-input name="nombre" label="Nombre(s)" labelPlacement="floating" fill="outline" [(ngModel)]="cliente.nombre" class="ion-margin-bottom"></ion-input>
+      
+      <ion-input name="apellido_paterno" label="Apellido Paterno" labelPlacement="floating" fill="outline" [(ngModel)]="cliente.apellido_paterno" class="ion-margin-bottom"></ion-input>
+      
+      <ion-input name="apellido_materno" label="Apellido Materno (Opcional)" labelPlacement="floating" fill="outline" [(ngModel)]="cliente.apellido_materno" class="ion-margin-bottom"></ion-input>
+      
+      <ion-input name="telefono" label="Teléfono" type="tel" labelPlacement="floating" fill="outline" [(ngModel)]="cliente.telefono" class="ion-margin-bottom" placeholder="Ej. 9210000000"></ion-input>
+      
+      <ion-input name="password" label="Contraseña" type="password" labelPlacement="floating" fill="outline" [(ngModel)]="cliente.password"></ion-input>
+
+    </ion-card-content>
+  </ion-card>
+
+  <!-- SECCIÓN 2: DIRECCIÓN DE ENTREGA -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title style="font-size: 18px;">Dirección de Entrega</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      
+      <ion-select name="colonia" label="Colonia" labelPlacement="floating" fill="outline" [(ngModel)]="cliente.id_colonia" class="ion-margin-bottom" interface="action-sheet">
+        <ion-select-option *ngFor="let col of colonias" [value]="col.id_colonia">
+          {{ col.nombre_colonia }}
+        </ion-select-option>
+      </ion-select>
+
+      <ion-input name="calle" label="Calle" labelPlacement="floating" fill="outline" [(ngModel)]="cliente.calle" class="ion-margin-bottom"></ion-input>
+      
+      <ion-input name="numero" label="Número (Exterior/Interior)" labelPlacement="floating" fill="outline" [(ngModel)]="cliente.numero" class="ion-margin-bottom"></ion-input>
+      
+      <ion-textarea name="referencias" label="Referencias (Opcional)" labelPlacement="floating" fill="outline" [(ngModel)]="cliente.referencias_domicilio" placeholder="Ej. Casa verde junto a la tienda" [autoGrow]="true"></ion-textarea>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button expand="block" color="success" class="ion-margin-top" (click)="registrarCliente()">
+    Registrarme
+  </ion-button>
+
+</ion-content>

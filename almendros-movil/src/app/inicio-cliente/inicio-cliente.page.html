@@ -1,0 +1,94 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Agua Los Almendros</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="danger" fill="solid" (click)="cerrarSesion()">Salir</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" color="light">
+  
+  <div class="ion-text-center ion-margin-bottom">
+    <h1 style="font-weight: bold; color: #333;">¡Bienvenido(a)!</h1>
+    <p style="color: #666;">¿Qué necesitas hoy?</p>
+  </div>
+
+  <ion-button expand="block" color="tertiary" size="large" class="ion-margin-bottom" (click)="nuevoPedido()" style="--border-radius: 8px; font-weight: bold;">
+    + PEDIR GARRAFONES
+  </ion-button>
+
+  <!-- PESTAÑAS (SEGMENTOS) -->
+  <ion-segment [(ngModel)]="segmentoActual" class="ion-margin-bottom">
+    <ion-segment-button value="activos">
+      <ion-label>Activos</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="historial">
+      <ion-label>Historial</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- ================= SECCIÓN: ACTIVOS ================= -->
+  <div *ngIf="segmentoActual === 'activos'">
+    
+    <div *ngIf="pedidosActivos.length === 0" class="ion-text-center ion-margin-top">
+      <p style="color: #888;">No tienes pedidos en curso en este momento.</p>
+    </div>
+
+    <ion-card *ngFor="let pedido of pedidosActivos" class="ion-margin-bottom shadow-sm">
+      <ion-card-header>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <ion-card-title>Pedido #{{ pedido.id_pedido }}</ion-card-title>
+          <ion-badge [color]="getColorEstatus(pedido.estatus_entrega)">{{ pedido.estatus_entrega }}</ion-badge>
+        </div>
+        <ion-card-subtitle>{{ pedido.fecha_hora_creacion | date:'dd/MM/yyyy HH:mm' }}</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <div style="display: flex; justify-content: space-between; font-size: 16px; margin-bottom: 10px;">
+          <span>{{ pedido.cantidad_garrafones }} Garrafones</span>
+          <span style="font-weight: bold; color: #28a745;">${{ pedido.monto_total | number:'1.2-2' }}</span>
+        </div>
+        <div style="font-size: 14px; color: #666; margin-bottom: 15px;">
+          <strong>Pago:</strong> {{ pedido.tipo_pago }}
+        </div>
+
+        <ion-button *ngIf="pedido.tipo_pago === 'Transferencia' && !pedido.comprobante_url" expand="block" color="primary" fill="outline" (click)="subirComprobante(pedido.id_pedido)">
+          <ion-icon name="cloud-upload-outline" slot="start"></ion-icon>
+          Subir Comprobante
+        </ion-button>
+        
+        <ion-button *ngIf="pedido.tipo_pago === 'Transferencia' && pedido.comprobante_url" expand="block" color="success" fill="clear" disabled="true">
+          <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+          Comprobante Enviado
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- ================= SECCIÓN: HISTORIAL ================= -->
+  <div *ngIf="segmentoActual === 'historial'">
+    
+    <div *ngIf="pedidosHistorial.length === 0" class="ion-text-center ion-margin-top">
+      <p style="color: #888;">Aún no tienes un historial de pedidos.</p>
+    </div>
+
+    <!-- Las tarjetas del historial se ven ligeramente transparentes (opacity: 0.85) -->
+    <ion-card *ngFor="let pedido of pedidosHistorial" class="ion-margin-bottom" style="opacity: 0.85;">
+      <ion-card-header>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <ion-card-title>Pedido #{{ pedido.id_pedido }}</ion-card-title>
+          <ion-badge [color]="getColorEstatus(pedido.estatus_entrega)">{{ pedido.estatus_entrega }}</ion-badge>
+        </div>
+        <ion-card-subtitle>{{ pedido.fecha_hora_creacion | date:'dd/MM/yyyy HH:mm' }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <div style="display: flex; justify-content: space-between; font-size: 16px;">
+          <span>{{ pedido.cantidad_garrafones }} Garrafones</span>
+          <span style="font-weight: bold; color: #666;">${{ pedido.monto_total | number:'1.2-2' }}</span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+</ion-content>

@@ -1,0 +1,7 @@
+{
+  "name": "almendros-movil",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

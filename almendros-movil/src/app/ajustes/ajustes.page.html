@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="volverARuta()">
+        ← Volver
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Ajustes de Cuenta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" color="light">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title style="font-size: 18px;">Cambiar Contraseña</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-input
+            label="Contraseña Actual"
+            labelPlacement="floating"
+            type="password"
+            placeholder="Ingresa tu clave actual"
+            [(ngModel)]="passwordActual">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input
+            label="Nueva Contraseña"
+            labelPlacement="floating"
+            type="password"
+            placeholder="Mínimo 6 caracteres"
+            [(ngModel)]="passwordNueva">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input
+            label="Confirmar Nueva Contraseña"
+            labelPlacement="floating"
+            type="password"
+            placeholder="Repite la nueva clave"
+            [(ngModel)]="confirmarPassword">
+          </ion-input>
+        </ion-item>
+      </ion-list>
+
+      <ion-button expand="block" color="primary" class="ion-margin-top" (click)="actualizarPassword()">
+        Guardar Nueva Contraseña
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,41 @@
+// For information on how to create your own theme, please refer to:
+// https://ionicframework.com/docs/theming/
+:root {
+  /** Primary: Azul tapa y contornos **/
+  --ion-color-primary: #0288d1;
+  --ion-color-primary-rgb: 2, 136, 209;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #0278b8;
+  --ion-color-primary-tint: #1b94d6;
+
+  /** Secondary: Turquesa de la gota y garrafón **/
+  --ion-color-secondary: #26c6da;
+  --ion-color-secondary-rgb: 38, 198, 218;
+  --ion-color-secondary-contrast: #000000;
+  --ion-color-secondary-contrast-rgb: 0, 0, 0;
+  --ion-color-secondary-shade: #21aebf;
+  --ion-color-secondary-tint: #3ccce0;
+
+  /** Danger: Rojo de los zapatos **/
+  --ion-color-danger: #e51c23;
+  --ion-color-danger-rgb: 229, 28, 35;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #ca191f;
+  --ion-color-danger-tint: #e83339;
+
+  /** Light: Fondo azul hielo de la imagen **/
+  --ion-color-light: #eaf7fe;
+  --ion-color-light-rgb: 234, 247, 254;
+  --ion-color-light-contrast: #0f3c56;
+  --ion-color-light-contrast-rgb: 15, 60, 86;
+  --ion-color-light-shade: #cee0e8;
+  --ion-color-light-tint: #ecFAff;
+
+  /** Fondo general y tarjetas blancas limpias **/
+  --ion-background-color: #eaf7fe;
+  --ion-text-color: #0f3c56;
+  --ion-card-background: #ffffff;
+  --ion-item-background: #ffffff;
+}

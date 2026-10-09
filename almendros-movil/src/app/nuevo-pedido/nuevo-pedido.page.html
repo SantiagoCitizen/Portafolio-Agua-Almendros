@@ -1,0 +1,109 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/inicio-cliente"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Hacer Pedido</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light" class="ion-padding">
+  
+  <!-- SECCIÓN 1: CANTIDAD -->
+  <ion-card class="ion-margin-bottom">
+    <ion-card-header>
+      <ion-card-title style="font-size: 18px;">¿Cuántos garrafones necesitas?</ion-card-title>
+    </ion-card-header>
+    <ion-card-content class="ion-text-center">
+      <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 10px;">
+        <ion-button color="medium" fill="outline" (click)="cambiarCantidad(-1)">
+          <ion-icon name="remove-outline"></ion-icon>
+        </ion-button>
+        
+        <span style="font-size: 32px; font-weight: bold; color: #333;">{{ cantidad }}</span>
+        
+        <ion-button color="primary" fill="solid" (click)="cambiarCantidad(1)">
+          <ion-icon name="add-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- SECCIÓN 2: MÉTODO DE PAGO -->
+  <ion-card class="ion-margin-bottom">
+    <ion-card-header>
+      <ion-card-title style="font-size: 18px;">Método de Pago</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-radio-group [(ngModel)]="metodoPago">
+        
+        <ion-item lines="none" class="ion-margin-bottom" style="border: 1px solid #ddd; border-radius: 8px;">
+          <ion-icon name="cash-outline" slot="start" color="success"></ion-icon>
+          <ion-label>Efectivo (Al recibir)</ion-label>
+          <ion-radio slot="end" value="Efectivo"></ion-radio>
+        </ion-item>
+
+        <ion-item lines="none" style="border: 1px solid #ddd; border-radius: 8px;">
+          <ion-icon name="card-outline" slot="start" color="primary"></ion-icon>
+          <ion-label>Transferencia</ion-label>
+          <ion-radio slot="end" value="Transferencia"></ion-radio>
+        </ion-item>
+
+      </ion-radio-group>
+
+      <!-- DATOS DE TRANSFERENCIA  -->
+      <div *ngIf="metodoPago === 'Transferencia'" class="ion-margin-top" style="background-color: #e9f2ff; padding: 15px; border-radius: 8px; border: 1px solid #b6d4fe;">
+        <h3 style="color: #084298; margin-top: 0; font-size: 16px; font-weight: bold;">Datos para Transferencia</h3>
+        <p style="color: #052c65; font-size: 14px; margin-bottom: 5px;"><strong>Banco:</strong> BBVA Bancomer</p>
+        <p style="color: #052c65; font-size: 14px; margin-bottom: 5px;"><strong>Cuenta:</strong> 1234 5678 90</p>
+        <p style="color: #052c65; font-size: 14px; margin-bottom: 5px;"><strong>CLABE:</strong> 012345678901234567</p>
+        <p style="color: #052c65; font-size: 14px; margin-bottom: 5px;"><strong>Titular:</strong> Agua Los Almendros</p>
+        <hr style="border-top: 1px solid #b6d4fe; margin: 10px 0;">
+        
+        <!-- Input para adjuntar el comprobante -->
+        <div class="ion-margin-top">
+          <p style="color: #052c65; font-size: 14px; font-weight: bold; margin-bottom: 5px;">Adjuntar Comprobante (Obligatorio):</p>
+          <input 
+            type="file" 
+            accept="image/*" 
+            (change)="seleccionarComprobante($event)" 
+            style="width: 100%; background: white; padding: 5px; border-radius: 5px; border: 1px dashed #084298;" 
+          />
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- SECCIÓN 3: NOTAS -->
+  <ion-card class="ion-margin-bottom">
+    <ion-card-header>
+      <ion-card-title style="font-size: 18px;">Notas para el repartidor (Opcional)</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-textarea
+        [(ngModel)]="notasCliente"
+        placeholder="Ej. Tocar el timbre fuerte, traer cambio de $500, dejar con el guardia..."
+        autoGrow="true"
+        rows="2"
+        style="border: 1px solid #ddd; border-radius: 8px; padding: 10px;">
+      </ion-textarea>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- SECCIÓN 4: RESUMEN Y BOTÓN -->
+  <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+    <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 16px; color: #666;">
+      <span>Precio unitario:</span>
+      <span>${{ precioUnitario | number:'1.2-2' }}</span>
+    </div>
+    <div style="display: flex; justify-content: space-between; font-size: 22px; font-weight: bold; color: #222; margin-bottom: 20px;">
+      <span>Total a pagar:</span>
+      <span>${{ (cantidad * precioUnitario) | number:'1.2-2' }}</span>
+    </div>
+
+    <ion-button expand="block" color="success" size="large" (click)="confirmarPedido()">
+      Confirmar Pedido
+    </ion-button>
+  </div>
+
+</ion-content>

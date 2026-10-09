@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso - Agua Los Almendros</title>
+    <!--Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!--Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!--CSS-->
+    <link rel="stylesheet" href="css/styles-login.css">
+</head>
+<body class="bg-light d-flex align-items-center min-vh-100">
+
+    <main class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-5 col-xl-4">
+                <!--Tarjeta del login-->
+                <div class="card shadow-lg border-0 rounded-4">
+                    <div class="card-body p-5">
+
+                        <!--Encabezado y logo (cuando lo tenga)-->
+                        <div class="text-center mb-4">
+                            <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 70px; height: 70px;">
+                                <i class="bi bi-droplet-fill fs-1"></i>
+                            </div>
+                            <h4 class="fw-bold text-dark">Agua Los Almendros</h4>
+                            <p class="text-muted small">Panel de Administracion</p>    
+                        </div>
+
+                        <!--Mostrar errores del servidor-->
+                        <div id="alertaError" class="alert alert-danger d-none d-flex align-items-center shadow-sm" role="alert" aria-live="assertive">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            <span id="mensajeError">Error de autenticación</span>
+                        </div>
+
+                        <!--Login-->
+                        <form id="loginForm" novalidate>
+                            <!--Campo: telefono-->
+                            <div class="form-floating mb-3">
+                                <input type="tel" class="form-control" id="inputTelefono" name="telefono" placeholder="9211000000" pattern="[0-9]{10}" required aria-describedby="telefonoHelp">
+                                <label for="inputTelefono"><i class="bi bi-telephone-fill me-2 text-muted"></i>Numero de telefono</label>
+                                <div class="invalid-feedback">
+                                    Por favor, ingresa un numero de telefono valido (10 digitos)
+                                </div>
+                            </div>
+
+                            <!--Campo: contraseña-->
+                            <div class="form-floating mb-4">
+                                <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Contraseña" required>
+                                <label for="inputPassword"><i class="bi bi-lock-fill me-2 text-muted"></i>Contraseña</label>
+                                <div class="invalid-feedback">
+                                    La contraseña es obligatoria
+                                </div>
+                            </div>
+                            <!--Boton entrar-->
+                            <button type="submit" id="btnSubmit" class="btn btn-primary w-100 py-3 fw-bold rounded-3 shadow-sm d-flex justify-content-center align-items-center">
+                                <span id="btnText">Entrar</span>
+                                <!--Spinner oculto-->
+                                <div id="btnSpinner" class="spinner-border spinner-border-sm text-light ms-2 d-none" role="status">
+                                    <span class="visually-hidden">Cargando...</span>
+                                </div>
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+                <!--Pie de pagina-->
+                <div class="text-center mt-4">
+                    <small class="text-muted">&copy; 2026 Agua Los Almendros. Todos los derechos reservados.</small>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+    
+    
+    <!--Backend a JS-->
+    <script type="module" src="js/login.js"></script>
+</body>
+</html>

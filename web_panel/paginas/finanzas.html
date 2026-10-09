@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finanzas - Agua Los Almendros</title>
+
+    <!--Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <!--Bootstrap icons-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"/>
+    <link rel="stylesheet" href="../css/styles-index.css"/>
+  </head>
+  <body class="d-flex bg-light">
+    <!-- Barra lateral -->
+    <div id="contenedor-sidebar" class="sticky-top vh-100 bg-white border-end" style="z-index: 1020; min-width: 85px;"></div>
+
+    <!--Contenedor principal-->
+    <div class="flex-grow-1 d-flex flex-column">
+      <!--Encabezado-->
+      <header class="bg-white border-bottom py-3 px-4 d-flex align-items-center">
+        <h4 class="mb-0 fw-bold"> Agua Los Almendros
+          <span class="textmuted fw-nromal ms-2 fs-5"> - Finanzas</span>
+        </h4>
+      </header>
+
+      <main class="container-fluid p-4">
+        <!--Tarjetas KPI Superiores-->
+        <section class="row mb-4">
+          <!--Tarjeta: Pedidos por validar-->
+          <article class="col-md-4 mb-3">
+            <div class="card shadow-sm h-100 border-0 border-start border-warning border-4 rounded-3">
+              <div class="card-body text-center py-4">
+                <h6 class="text-muted fw-bold mb-3">
+                  Transferencias Por Validar
+                </h6>
+                <h2 class="display-5 fw-bold text-dark mb-0" id="kpiTransferencias">
+                  <span class="spinner-border text-warning" role="status"></span>
+                </h2>
+              </div>
+            </div>
+          </article>
+          <!--Tarjeta: Alertas-->
+          <article class="col-md-4 mb-3">
+            <div class="card shadow-sm h-100 border-0 border-start border-danger border-4 rounded-3">
+              <div class="card-body text-center py-4">
+                <h6 class="text-muted fw-bold mb-3">Alertas</h6>
+                <h2 class="display-5 fw-bold text-danger mb-0" id="kpiAlertas">
+                  <span class="spinner-border text-danger" role="status"></span>
+                </h2>
+              </div>
+            </div>
+          </article>
+          <!--Tarjeta: Ventas totales-->
+          <article class="col-md-4 mb-3">
+            <div class="card shadow-sm h-100 border-0 border-start border-success border-4 rounded-3 bg-opacity-10">
+              <div class="card-body text-center py-4">
+                <h6 class="text-sucess fw-bold mb-3">
+                  Monto Ventas Totales (Hoy)
+                </h6>
+                <h2 class="display-5 fw-bold text-success mb-1" id="kpiVentasTotal">
+                  <span class="spinner-border spinner-border-sm" role="status"></span>
+                </h2>
+                <small class="text-muted fw-semibold" id="kpiGarrafonesTotal"
+                  >Cargando...</small>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <!--Seccion: Auditoria de Transferencias-->
+        <div class="card shadow-sm border-0 rounded-3 mb-4 border-3">
+          <div class="card-header bg-white py-3 border-bottom-0 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-bold text-primary">
+              <i class="bi bi-bank"></i> Auditoría de Pagos por Transferencia
+            </h5>
+            <div>
+              <button class="btn btn-sm btn-success shadow-sm me-2" onclick="exportarExcel('tablaAuditoriaTransferencias', 'Transferencias')">
+                <i class="bi bi-file-earmark-excel"></i> Excel
+              </button>
+              <button class="btn btn-sm btn-danger shadow-smn me-2" onclick="exportarPDF('tablaAuditoriaTransferencias', 'Transferencias - Purificadora Los Almendros')">
+                <i class="bi bi-file-earmark-pdf"></i> PDF
+              </button>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive" style="max-height: 350px; overflow-y: auto">
+              <table class="table table-hover table-striped mb-0 text-center align-middle">
+                <thead class="table-light text-muted sticky-top">
+                  <tr>
+                    <th>Pedido</th>
+                    <th>Cliente</th>
+                    <th>Monto</th>
+                    <th>Captura</th>
+                    <th>Fecha Solicitud</th>
+                    <th>Acción</th>
+                  </tr>
+                </thead>
+                <tbody id="tablaAuditoriaTransferencias">
+                  <tr>
+                    <td colspan="6" class="text-center py-4 text-muted">
+                      <div class="spinner-border spinner-border-sm me-2" role="status"></div> Cargando transferencias pendientes...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!--Seccion: Resumen-->
+        <div class="card shadow-sm border-0 rounded-3 mb-4 border-3">
+          <div class="card-header bg-white py-3 border-bottom-0 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-bold text-primary">
+              <i class="bi bi-person-lines-fill"></i> Resumen de Venta por
+              Repartidor (Hoy)
+            </h5>
+            <div>
+              <button class="btn btn-sm btn-success shadow-smn me-2" onclick="exportarExcel('tablaConciliacionRepartidores', 'Corte de Caja')">
+                <i class="bi bi-file-earmark-excel"></i> Excel
+              </button>
+              <button class="btn btn-sm btn-danger shadow-smn" onclick="exportarPDF('tablaConciliacionRepartidores', 'Corte de Caja - Purificadora los Almendros')">
+                <i class="bi bi-file-earmark-pdf"></i> PDF
+              </button>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive" style="max-height: 350px; overflow-y: auto">
+              <table class="table table-hover mb-0 text-center align-middle">
+                <thead class="table-light text-muted sticky-top">
+                  <tr>
+                    <th>Repartidor</th>
+                    <th>Monto En Efectivo</th>
+                    <th>Monto en Transferencias</th>
+                    <th>Incidencias</th>
+                    <th>Detalle</th>
+                  </tr>
+                </thead>
+                <tbody id="tablaConciliacionRepartidores">
+                  <tr>
+                    <td colspan="5" class="text-center py-4 text-muted">
+                      <div class="spinner-border spinner-border-sm me-2" role="status"></div> Calculando totales del día...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!--Seccion: Notas de Campo-->
+        <div class="card shadow-sm border-0 rounded-3 mb-4">
+          <div class="card-header bg-white py-3 border-bottom-0">
+            <h5 class="mb-0 fw-bold text-primary">
+              <i class="bi bi-exclamation-triangle"></i> Notas de Campo
+            </h5>
+          </div>
+          <div class="card-body p-0">
+            <div
+              class="table-responsive"
+              style="max-height: 350px; overflow-y: auto">
+              <table
+                class="table table-hover table-striped mb-0 text-center align-middle">
+                <thead class="table-light text-muted sticky-top">
+                  <tr>
+                    <th>Pedido</th>
+                    <th>Repartidor</th>
+                    <th>Estatus</th>
+                    <th>Notas de Campo</th>
+                  </tr>
+                </thead>
+                <tbody id="tablaBitacoraIncidencias">
+                  <tr>
+                    <td colspan="4" class="text-center py-4 text-muted">
+                      <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+                      Buscando incidencias...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+
+        <!--Modals-->
+
+        <!--Abrir comprobantes-->
+        <div class="modal fade" id="modalComprobante" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+              <div class="modal-header bg-light">
+                <h5 class="modal-title fw-bold text-primary"><i class="bi bi-image"></i> Comprobante de pago</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body text-center p-4">
+                <!--Imagen Corregida-->
+                <img id="imgComprobante" src="" class="img-fluid rounded shadow-sm" alt="Comprobante no disponible" style="max-height: 70vh; width: 100%; object-fit: contain;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--Detalles del repartidor-->
+        <div class="modal fade" id="modalDetalleRepartidor" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow">
+              <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title fw-bold"><i class="bi bi-list-check"></i> Detalle de entregas del dia</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body p-0">
+                <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                  <table class="table table-hover table-striped mb-0 text-center align-middle">
+                    <thead class="table-light sticky-top">
+                      <tr>
+                        <th>Pedido</th>
+                        <th>Cliente</th>
+                        <th>Monto</th>
+                        <th>Tipo de pago</th>
+                        <th>Estatus</th>
+                        <th>Notas</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tablaDetalleRepartidor">
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!--Script Bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!--SheetJS para exportar a Excel-->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <!--jsPDF y AutoTable para exportar a PDF-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <!--Autenticacion-->
+    <script src="../js/auth.js"></script>
+    <!--Finanzas JS-->
+    <script type="module" src="../js/finanzas.js"></script>
+
+    <script src="../js/sidebar.js"></script>
+  </body>
+</html>

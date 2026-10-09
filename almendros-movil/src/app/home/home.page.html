@@ -1,0 +1,28 @@
+<ion-content class="ion-padding" color="light">
+  <div style="margin-top: 15vh;">
+    <h1 class="ion-text-center" style="color: #0d6efd; font-weight: bold;">Agua Los Almendros</h1>
+    <p class="ion-text-center" style="color: #6c757d; margin-bottom: 30px;">Portal de Repartidores</p>
+
+    <ion-card>
+      <ion-card-content>
+        <ion-list>
+          <ion-item>
+            <ion-input label="Teléfono" labelPlacement="floating" type="tel" [(ngModel)]="telefono"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input label="Contraseña" labelPlacement="floating" type="password" [(ngModel)]="password"></ion-input>
+          </ion-item>
+        </ion-list>
+        
+        <ion-button expand="block" class="ion-margin-top" (click)="iniciarSesion()">
+          Iniciar Sesión
+        </ion-button>
+
+        <ion-button expand="block" fill="clear" color="medium" (click)="irARegistro()">
+          ¿No tienes cuenta? Crea una aquí
+        </ion-button>
+        
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
